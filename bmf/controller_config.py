@@ -104,21 +104,82 @@ def service_has_custom_policy(name):
     """ returns true if service has custom policy type """
     return True if get_service_policy_type(name) == "custom" else False
 
-def get_service_policy_rules(name):
+def get_service_policy_ip_rules(name):
     method = 'GET'
     path = bigchain_path+'service[name="%s"]/policy/rule' % name
     data = '{}'
     json_content = controller_request(method, path, data=data)
     if json_content:
-        rules = []
-        keys = ['sequence', 'ip-proto', 'src-ip', 'src-ip-mask', 'dst-ip', 'dst-ip-mask', 'src-tp-port', 'dst-tp-port']
-        for item in json_content:
-            rule = str(item.get('sequence')) + " match"
-            for key in keys[1:]:
-                rule += " " + str(item.get(key))
-            rules.append(rule)
-        return rules
+        return json_content
 
+def get_next_sequence_number(name):
+    """ returns the next available sequence number for a service rule """
+    rules = get_service_policy_ip_rules(name)
+    if rules:
+        current_sequence = map(lambda x: x['sequence'], rules)
+        next_sequence_number = 1
+        while next_sequence_number in current_sequence:
+            next_sequence_number += 1
+        return next_sequence_number
+    return 1
+
+def verify_7_tuple_dict(ip_7_tuple_dict):
+    """ """
+    if len(ip_7_tuple_dict) != 7:
+        print "IP 5-tuple incomplete"
+        return None
+    try:
+        if not (ip_7_tuple_dict["ip-proto"] == 17 or ip_7_tuple_dict["ip-proto"] == 6):
+            print "ip-proto must be either TCP (6) or UDP (17)"
+            return None
+    except KeyError:
+        print "ip-proto not specified"
+        return None
+    return True
+
+def find_existing_service_ip_rule(name, ip_7_tuple_dict):
+    """ returns list of rules equal to rule, that are already programmed on the controller for the service  """
+    rules = get_service_policy_ip_rules(name)
+    if not rules:
+        return []
+    matching_rules = []
+    for rule in rules:
+        if all(item in rule.items() for item in ip_7_tuple_dict.items()):
+            matching_rules.append(rule)
+    return matching_rules
+
+def add_service_ip_rule(name, ip_7_tuple_dict):
+    """ 
+    adds ip rule to the service 
+    PUT http://127.0.0.1:8082/api/v1/data/controller/applications/bigchain/service[name="A10-Service1"]/policy/rule[sequence=6] {"src-ip-mask": "255.255.255.255", "sequence": 6, "ether-type": 2048, "src-ip": "1.4.1.4", "dst-ip-mask": "255.255.255.255", "src-tp-port": 64402, "ip-proto": 6, "dst-ip": "1.4.6.1", "dst-tp-port": 64034}
+    """
+    if not verify_7_tuple_dict(ip_7_tuple_dict):
+        return None
+    rules = find_existing_service_ip_rule(name, ip_7_tuple_dict)
+    if rules:
+        return None
+    sequence = get_next_sequence_number(name)
+    method = 'PUT'
+    path = bigchain_path+'service[name="%s"]/policy/rule[sequence=%s]' % (name, sequence)
+    data = '{"sequence": %s, "ether-type": %s, "ip-proto": %s, "src-ip": "%s", "src-ip-mask": "%s", "dst-ip": "%s", "dst-ip-mask": "%s", "src-tp-port": %s, "dst-tp-port": %s}' %(sequence, 2048, ip_7_tuple_dict["ip-proto"], ip_7_tuple_dict["src-ip"], ip_7_tuple_dict["src-ip-mask"], ip_7_tuple_dict["dst-ip"], ip_7_tuple_dict["dst-ip-mask"], ip_7_tuple_dict["src-tp-port"], ip_7_tuple_dict["dst-tp-port"])
+    return controller_request(method, path, data=data)
+
+def delete_service_ip_rule(name, ip_7_tuple_dict):
+    """
+    deletes  ip rule from a service
+    DELETE http://127.0.0.1:8082/api/v1/data/controller/applications/bigchain/service[name="A10-Service1"]/policy/rule[sequence=3] {"src-ip-mask": "255.255.255.255", "ether-type": 2048, "src-ip": "1.4.1.4", "dst-ip-mask": "255.255.255.255", "src-tp-port": 64402, "ip-proto": 6, "dst-ip": "1.4.6.1", "dst-tp-port": 64034}
+    """
+    if not verify_7_tuple_dict(ip_7_tuple_dict):
+        return None
+    rules = find_existing_service_ip_rule(name, ip_7_tuple_dict)
+    if not rules:
+        return None
+    method = 'DELETE'
+    for rule in rules:
+        path = bigchain_path+'service[name="%s"]/policy/rule[sequence=%s]' % (name, rule['sequence'])
+        data = rule
+        controller_request(method, path, data=data)
+    
 if __name__ == '__main__':
     authentication()
     # create a chain
@@ -126,8 +187,12 @@ if __name__ == '__main__':
     #delete_chain("Chain1")
     #add_chain_endpoints("Chain1", "00:00:cc:37:ab:2c:9d:68", "ethernet49", "ethernet50")
     #add_service("MyService")
-    #service_has_custom_policy("BC_SSLVA_Inside")
+    #service_has_custom_policy("MyService")
     #delete_service("MyService")
-    print get_service_policy_rules("A10-Service1")
-    print get_service_policy_action("A10-Service1")
+    #get_service_policy_action("A10-Service1")
+    #print get_service_policy_ip_rules("A10-Service1")
+    #print get_next_sequence_number("A10-Service1")
+    ip_7_tuple = {"ip-proto": 6, "src-ip": "10.10.25.36", "src-ip-mask": "255.255.255.255", "dst-ip": "56.38.123.23", "dst-ip-mask": "255.255.255.255", "src-tp-port": 42365, "dst-tp-port": 80}
+    #add_service_ip_rule("A10-Service1", ip_7_tuple)
+    delete_service_ip_rule("A10-Service1", ip_7_tuple)
     authentication_revoke()
