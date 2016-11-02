@@ -5,12 +5,12 @@ import sys
 
 requests.packages.urllib3.disable_warnings()
 
-controller_ip = "10.2.19.102"
-username = "admin"
-password = "bsn"
-cookie = ""
+controller_ip = ""
+username = ""
+password = ""
 
 # do not modify
+cookie = ""
 bigchain_path = '/api/v1/data/controller/applications/bigchain/'
 
 def controller_request(method, path, data="", dry_run=False):
@@ -51,11 +51,18 @@ def authentication_revoke():
     path = '/api/v1/data/controller/core/aaa/session[auth-token="%s"]' % cookie
     status_code = controller_request(method, path)
 
+def get_controller_version():
+    method = 'GET'
+    path = '/rest/v1/system/version'
+    data = '{}'
+    json_content = controller_request(method, path, data=data, dry_run=True)
+    return json_content[0] if type(json_content) == list else None
+    
 def add_chain(name):
     method = 'PUT'
     path = bigchain_path+'chain[name="%s"]' % name
     data = '{"name": "%s"}' % name
-    controller_request(method, path, data=data)
+    controller_request(method, path, data=data, dry_run=True)
 
 def delete_chain(name):
     method = 'DELETE'
@@ -67,13 +74,20 @@ def add_chain_endpoints(chain_name, switch_alias_or_dpid, endpoint1, endpoint2):
     method = 'PATCH'
     path = bigchain_path+'chain[name="%s"]/endpoint-pair' % chain_name
     data = '{"switch": "%s", "endpoint1": "%s", "endpoint2": "%s"}' %(switch_alias_or_dpid, endpoint1, endpoint2)
-    controller_request(method, path, data=data)
+    response = controller_request(method, path, data=data, dry_run=False)
+    print response
 
 def add_service(name):
     method = 'PUT'
     path = bigchain_path+'service[name="%s"]' % name
     data = '{"name": "%s"}' % name
     controller_request(method, path, data=data)
+
+def add_service_instance(name, instance_id, switch, in_intf, out_intf):
+    method = 'PUT'
+    path = bigchain_path+'service[name="%s"]/instance[id=%s]/interface-pair' % (name, instance_id)
+    data = '{"switch": "%s", "in": "%s", "out": "%s"}' % (switch, in_intf, out_intf)
+    print controller_request(method, path, data=data, dry_run=True)
 
 def delete_service(name):
     method = 'DELETE'
@@ -183,16 +197,18 @@ def delete_service_ip_rule(name, ip_7_tuple_dict):
 if __name__ == '__main__':
     authentication()
     # create a chain
-    #add_chain("Chain1")
+    add_chain("Chain1")
     #delete_chain("Chain1")
-    #add_chain_endpoints("Chain1", "00:00:cc:37:ab:2c:9d:68", "ethernet49", "ethernet50")
-    #add_service("MyService")
-    #service_has_custom_policy("MyService")
+    add_chain_endpoints("Chain1", "inline2", "ethernet1", "ethernet12")
+    add_service("MyService")
+    service_has_custom_policy("MyService")
     #delete_service("MyService")
     #get_service_policy_action("A10-Service1")
     #print get_service_policy_ip_rules("A10-Service1")
     #print get_next_sequence_number("A10-Service1")
-    ip_7_tuple = {"ip-proto": 6, "src-ip": "10.10.25.36", "src-ip-mask": "255.255.255.255", "dst-ip": "56.38.123.23", "dst-ip-mask": "255.255.255.255", "src-tp-port": 42365, "dst-tp-port": 80}
+    #ip_7_tuple = {"ip-proto": 6, "src-ip": "10.10.25.36", "src-ip-mask": "255.255.255.255", "dst-ip": "56.38.123.23", "dst-ip-mask": "255.255.255.255", "src-tp-port": 42365, "dst-tp-port": 80}
     #add_service_ip_rule("A10-Service1", ip_7_tuple)
-    delete_service_ip_rule("A10-Service1", ip_7_tuple)
+    #delete_service_ip_rule("A10-Service1", ip_7_tuple)
+    #print get_controller_version()
+    #add_service_instance('WAF', '1', '00:00:cc:37:ab:2c:97:ea', 'ethernet30', 'ethernet31')
     authentication_revoke()
