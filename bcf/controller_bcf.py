@@ -6,7 +6,7 @@ import requests
 import json 
 import sys
 
-#requests.packages.urllib3.disable_warnings()
+requests.packages.urllib3.disable_warnings()
 
 class Controller(object):
     """
@@ -16,6 +16,7 @@ class Controller(object):
     """
     def __init__(self, controller_ip, access_token):
         self.bcf_path = '/api/v1/data/controller/applications/bcf'
+        self.core_path = '/api/v1/data/controller/core'
         self.controller_ip = controller_ip
         self.access_token = access_token
 
@@ -41,7 +42,9 @@ class Controller(object):
             #else:
             return response
 
-    def make_request(self, verb, path, data):
+    def make_request(self, verb, path, data, core_path = False):
+        if core_path:
+            return self.controller_request(verb, self.core_path + path, data=data, dry_run=False)
         return self.controller_request(verb, self.bcf_path + path, data=data, dry_run=False)
         
     def interface_group(self, name, mode='', origination='', action='add'):
@@ -52,7 +55,13 @@ class Controller(object):
             data = '{"name": "%s", "origination": "%s"}' % (name, origination)
         else:
             data = '{"name": "%s"}' % name
-        return self.make_request('PUT' if action == 'add' else 'DELETE', path, data=data)
+        if action == 'add':
+            return self.make_request('PUT', path, data=data)
+        elif action == 'delete':
+            return self.make_request('DELETE', path, data=data)
+        elif action == 'get':
+            response = self.make_request('GET', path, data=data)
+            return response.json()[0]
 
     def interface_groups(self, inteface_groups, action='add'):
         """ add each interface_group in list of interface_groups using the function add_interface_group """
@@ -108,6 +117,7 @@ class Controller(object):
         return [segment for segment in segments if segment['name'].startswith(prefix)]
                                                             
     def interface_group_segment_membership(self, interface_group, segment, tenant, vlan='-1', action='add'):
+        """ """
         path = '/tenant[name="%s"]/segment[name="%s"]/interface-group-membership-rule[vlan=%s][interface-group="%s"]' %(tenant, segment, vlan, interface_group)
         data = '{"vlan": %s, "interface-group": "%s"}' %(vlan, interface_group)
         return self.make_request('POST' if action == 'add' else 'DELETE', path, data=data)
@@ -117,11 +127,24 @@ class Controller(object):
         for interface_group in interface_groups:
             add_interface_group(interface_group)
 
-if __name__ == '__main__':
-    pass
-    controller = Controller('10.1.8.120', 'ezF5puxiQk6JBMRKSz2RXo2tJfi5b4dB')
-    print( controller.get_segments('vCenter-c7000') )
-    #print( controller.interface_group('test_interface_group_1', mode='lacp', origination='oneview'))
-    #controller.interface_group('test_interface_group_2')
-    #controller.tenant('test_tenant')
-    #controller.segment('red', 'test_tenant')
+    def interface_stats(self, interface, switch_dpid):
+        """ """
+        path = '/info/statistic/interface-counter[interface/name="%s"][switch-dpid="%s"]?select=interface[name="%s"]' % (interface, switch_dpid, interface)
+        response = self.make_request('GET', path, data='{}')
+        return response.json()[0]
+
+    def switch_dpid(self, switch):
+        """ """
+        path = '/switch-config[name="%s"]?select=dpid' % switch
+        response = self.make_request('GET', path, data='{}', core_path=True)
+        return response.json()[0]['dpid']
+
+    def interface(self, switch, interface, action='no-shutdown'):
+        """ """
+        if action == 'shutdown':
+            path = '/switch-config[name="%s"]/interface[name="%s"]' %(switch, interface)
+            data = '{"shutdown": true}'
+            return self.make_request('PATCH', path, data=data, core_path=True)
+        elif action == 'no-shutdown':
+            path = '/switch-config[name="%s"]/interface[name="%s"]/shutdown' %(switch, interface)
+            return self.make_request('DELETE', path, data='{}', core_path=True)
