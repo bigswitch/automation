@@ -60,13 +60,21 @@ class Controller(object):
         elif action == 'delete':
             return self.make_request('DELETE', path, data=data)
         elif action == 'get':
-            response = self.make_request('GET', path, data=data)
-            return response.json()[0]
+            response = self.make_request('GET', path, data=data).json()
+            if response:
+                return response[0] if response else []
 
-    def interface_groups(self, inteface_groups, action='add'):
+    def interface_groups(self, interface_groups=[], action='add'):
         """ add each interface_group in list of interface_groups using the function add_interface_group """
-        for interface_group in interface_groups:
-            interface_group(interface_group, action=action)
+        if action == 'add':
+            for interface_group in interface_groups:
+                interface_group(interface_group, action=action)
+        elif action == 'get':
+            path = '/info/fabric/interface-group/detail'
+            response = self.make_request('GET', path, data='{}').json()
+            return response
+            if response:
+                return response[0] if response else []
         
     def interface_group_member(self, switch, interface, interface_group, action='add'):
         path = '/interface-group[name="%s"]/member-interface[switch-name="%s"][interface-name="%s"]'% (interface_group, switch, interface)
@@ -122,16 +130,11 @@ class Controller(object):
         data = '{"vlan": %s, "interface-group": "%s"}' %(vlan, interface_group)
         return self.make_request('POST' if action == 'add' else 'DELETE', path, data=data)
     
-    def interface_groups(self, inteface_groups):
-        """ add each interface_group in list of interface_groups using the function add_interface_group """
-        for interface_group in interface_groups:
-            add_interface_group(interface_group)
-
     def interface_stats(self, interface, switch_dpid):
         """ """
         path = '/info/statistic/interface-counter[interface/name="%s"][switch-dpid="%s"]?select=interface[name="%s"]' % (interface, switch_dpid, interface)
-        response = self.make_request('GET', path, data='{}')
-        return response.json()[0]
+        response = self.make_request('GET', path, data='{}').json()
+        return response[0] if response else []
 
     def switch_dpid(self, switch):
         """ """
