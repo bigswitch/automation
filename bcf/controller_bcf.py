@@ -130,17 +130,22 @@ class Controller(object):
         data = '{"vlan": %s, "interface-group": "%s"}' %(vlan, interface_group)
         return self.make_request('POST' if action == 'add' else 'DELETE', path, data=data)
     
-    def interface_stats(self, interface, switch_dpid):
+    def interface_stats(self, interface, switch_dpid, action='get'):
         """ """
-        path = '/info/statistic/interface-counter[interface/name="%s"][switch-dpid="%s"]?select=interface[name="%s"]' % (interface, switch_dpid, interface)
-        response = self.make_request('GET', path, data='{}').json()
-        return response[0] if response else []
+        if action != 'clear':
+            path = '/info/statistic/interface-counter[interface/name="%s"][switch-dpid="%s"]?select=interface[name="%s"]' % (interface, switch_dpid, interface)
+            response = self.make_request('GET', path, data='{}').json()
+            return response[0] if response else []
+        else:
+            path = '/info/statistic/interface-counter[switch-dpid="%s"]/interface[name="%s"]' % (switch_dpid, interface)
+            response = self.make_request('DELETE', path, data='{}').json()
+            return response
 
     def switch_dpid(self, switch):
         """ """
         path = '/switch-config[name="%s"]?select=dpid' % switch
         response = self.make_request('GET', path, data='{}', core_path=True)
-        return response.json()[0]['dpid']
+        return response.json()[0]['dpid'].lower()
 
     def interface(self, switch, interface, action='no-shutdown'):
         """ """
