@@ -165,7 +165,7 @@ def find_existing_service_ip_rule(name, ip_7_tuple_dict):
 def add_service_ip_rule(name, ip_7_tuple_dict):
     """ 
     adds ip rule to the service 
-    PUT http://127.0.0.1:8082/api/v1/data/controller/applications/bigchain/service[name="A10-Service1"]/policy/rule[sequence=6] {"src-ip-mask": "255.255.255.255", "sequence": 6, "ether-type": 2048, "src-ip": "1.4.1.4", "dst-ip-mask": "255.255.255.255", "src-tp-port": 64402, "ip-proto": 6, "dst-ip": "1.4.6.1", "dst-tp-port": 64034}
+    PUT http://127.0.0.1:8082/api/v1/data/controller/applications/bigchain/service[name="Service1"]/policy/rule[sequence=6] {"src-ip-mask": "255.255.255.255", "sequence": 6, "ether-type": 2048, "src-ip": "1.4.1.4", "dst-ip-mask": "255.255.255.255", "src-tp-port": 64402, "ip-proto": 6, "dst-ip": "1.4.6.1", "dst-tp-port": 64034}
     """
     if not verify_7_tuple_dict(ip_7_tuple_dict):
         return None
@@ -181,7 +181,7 @@ def add_service_ip_rule(name, ip_7_tuple_dict):
 def delete_service_ip_rule(name, ip_7_tuple_dict):
     """
     deletes  ip rule from a service
-    DELETE http://127.0.0.1:8082/api/v1/data/controller/applications/bigchain/service[name="A10-Service1"]/policy/rule[sequence=3] {"src-ip-mask": "255.255.255.255", "ether-type": 2048, "src-ip": "1.4.1.4", "dst-ip-mask": "255.255.255.255", "src-tp-port": 64402, "ip-proto": 6, "dst-ip": "1.4.6.1", "dst-tp-port": 64034}
+    DELETE http://127.0.0.1:8082/api/v1/data/controller/applications/bigchain/service[name="Service1"]/policy/rule[sequence=3] {"src-ip-mask": "255.255.255.255", "ether-type": 2048, "src-ip": "1.4.1.4", "dst-ip-mask": "255.255.255.255", "src-tp-port": 64402, "ip-proto": 6, "dst-ip": "1.4.6.1", "dst-tp-port": 64034}
     """
     if not verify_7_tuple_dict(ip_7_tuple_dict):
         return None
@@ -203,12 +203,12 @@ if __name__ == '__main__':
     add_service("MyService")
     service_has_custom_policy("MyService")
     #delete_service("MyService")
-    #get_service_policy_action("A10-Service1")
-    #print get_service_policy_ip_rules("A10-Service1")
-    #print get_next_sequence_number("A10-Service1")
+    #get_service_policy_action("Service1")
+    #print get_service_policy_ip_rules("Service1")
+    #print get_next_sequence_number("Service1")
     #ip_7_tuple = {"ip-proto": 6, "src-ip": "10.10.25.36", "src-ip-mask": "255.255.255.255", "dst-ip": "56.38.123.23", "dst-ip-mask": "255.255.255.255", "src-tp-port": 42365, "dst-tp-port": 80}
-    #add_service_ip_rule("A10-Service1", ip_7_tuple)
-    #delete_service_ip_rule("A10-Service1", ip_7_tuple)
+    #add_service_ip_rule("Service1", ip_7_tuple)
+    #delete_service_ip_rule("Service1", ip_7_tuple)
     #print get_controller_version()
     #add_service_instance('WAF', '1', '00:00:cc:37:ab:2c:97:ea', 'ethernet30', 'ethernet31')
     authentication_revoke()

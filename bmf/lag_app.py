@@ -74,9 +74,9 @@ if __name__ == '__main__':
 
     # constants for the control loop
     switch = 'inline2'
-    lag1 = 'a10-lag1'
+    lag1 = 'lag1'
     to_add_to_lag1 = 'ethernet37'
-    lag2 = 'a10-lag2'
+    lag2 = 'lag2'
     to_add_to_lag2 = 'ethernet38'
 
     threshold = 5500
