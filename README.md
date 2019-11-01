@@ -8,7 +8,7 @@
 ![](docs/assets/images/bigswitch.png)
 
 ## Overview
-[![License: MIT](https://img.shields.io/hexpm/l/plug.svg?style=flat-square)](https://github.com/bigswitch/sample-scripts)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green)](https://github.com/bigswitch/automation)
 
 This site provides comprehensive examples on how to code with Big Switch products. Try out live at [labs.bigswitch.com](https://labs.bigswitch.com).
 
