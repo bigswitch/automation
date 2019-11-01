@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="google-site-verification" content="1111111" />
+  <!-- info -->
+  <title>code.bigswitch.com</title>
+  <meta property="og:title" content="code.bigswitch.com">
+  <meta property="og:description" content="Big Switch Automation Repository">
+
+  <!-- meta -->
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  
+  <!-- Theme: Defaults -->
+  <link rel="stylesheet" href="https://unpkg.com/docsify-themeable/dist/css/theme-simple-dark.css">
+  <!-- Custom stylesheet -->
+  <link rel="stylesheet" href="assets/css/stylesheet.css">
+  <!-- Custom plugins -->
+  <script src="assets/js/plugins.js"></script>
+  <!-- Global Site Tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=GA_TRACKING_ID"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-126454318-1');
+  </script>
+  <!-- Page favicons -->
+  <link rel="icon" href="https://www.bigswitch.com/sites/default/files/favicon1.ico" sizes="32x32" />
+  <link rel="icon" href="https://www.bigswitch.com/sites/default/files/favicon1.ico" sizes="192x192" />
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+    window.$docsify = {
+      name: 'Big Monitoring Fabric Automation Examples',
+      repo: 'https://github.com/bigswitch/automation/',
+      themeColor: '#1e90ff',
+      homepage: 'bmf/overview.md',
+      coverpage: 'coverpage.md',
+      loadSidebar: 'bmf/sidebar.md',
+      auto2top: true,
+      subMaxLevel: 1,
+      search: 'auto',
+      search: {
+        placeholder: 'Type to search',
+        noData: 'No Results Found!',
+        depth: 1
+      },
+      plugins: [
+        pageLinks,
+        pageNav,
+      ]
+    }
+  </script>
+  <!-- Load external plugins -->
+  <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
+  <script src="https://unpkg.com/docsify-themeable"></script>
+  <script src="//unpkg.com/docsify/lib/plugins/search.min.js"></script>
+  <script src="//unpkg.com/docsify-copy-code"></script>
+  <script src="//unpkg.com/prismjs/components/prism-python.min.js"></script>
+  <script src="//unpkg.com/prismjs/components/prism-rest.min.js"></script>
+  <script src="//unpkg.com/prismjs/components/prism-yaml.min.js"></script>
+  <script src="//unpkg.com/prismjs/components/prism-bash.min.js"></script>
+  <script src="//unpkg.com/docsify/lib/plugins/emoji.min.js"></script>
+</body>
+</html>
