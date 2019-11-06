@@ -1,3 +1,8 @@
+# Downloading BCF Terraform Provider
+Clone the BCF Terraform Provider github repository:
+git clone git@github.com:bigswitch/terraform-provider-bcf.git
+cd terraform-provider-bcf/
+
 # BCF Terraform Provider
 This repository contains the terraform provider implementation for BigSwitch's
 Big Cloud Fabric (BCF) Controller product. The provider plugin helps the DevOps
