@@ -1,0 +1,17 @@
+---
+- hosts: 10.8.23.15
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: Create/Delete tenant
+      bcf_tenant:
+          name: '{{ item.name }}'
+          controller: '{{ inventory_hostname }}'
+          state: absent
+          validate_certs: false
+          access_token: 'PSQYiiz8PfQUGdRfisC627BNutB-dfZB'
+      with_items:
+        - { name: 'testtenant1' }
+        - { name: 'testtenant2' }
+ 
+   

@@ -1,0 +1,9 @@
+[all:vars]
+user=admin
+password=password
+
+[cont15]
+10.8.23.15    ansible_user=admin
+
+
+
