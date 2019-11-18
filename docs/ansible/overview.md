@@ -1,6 +1,6 @@
 # Big Cloud Fabric Ansible Automation
 
-![](assets/images/bigswitch.png)
+![bsnlogo](assets/images/bigswitch.png)
 
 ---
 
