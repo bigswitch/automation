@@ -1,14 +1,9 @@
-- **Getting Started**
-- [Getting Started with Ansible](common/python-getting-started.md)
+- [Ansible - Home](ansible/overview.md)
+- [FAQ](common/faq.md)
+- [Feedback](common/feedback.md)
 
 
-- **Ansible Examples**
-- [Basic Examples](bcf/python-basic-examples.md)
-- [Copy Membership Rules](bcf/python-copyMembershipRules.md)
-- [Test](posts/test.md)
+- **BCF: Automating with Ansible**
+- [Getting Started with Ansible](ansible/ansible-getting-started.md)
+- [EVPC Examples](ansible/bcf/evpc-examples.md)
 
-
-- **BCF Ansbile Modules**
-- [Basic Examples](bcf/python-basic-examples.md)
-- [Copy Membership Rules](bcf/python-copyMembershipRules.md)
-- [Test](posts/test.md)
