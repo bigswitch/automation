@@ -8,4 +8,4 @@
 [Python](python/overview.md)
 [Ansible](ansible/overview.md)
 [Terraform](terraform/overview.md)
-[Try out Live](https://labs.bigswitch.com)
+[Try out with Big Switch labs](https://labs.bigswitch.com)
