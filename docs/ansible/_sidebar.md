@@ -1,6 +1,6 @@
 - [Ansible - Home](ansible/overview.md)
 - [FAQ](common/faq.md)
-- [Contribue/Feedback](common/feedback.md)
+- [Contribute/Feedback](common/feedback.md)
 
 
 - **BCF: Automating with Ansible**

@@ -1,5 +1,5 @@
 - [Terraform - Home](terraform/overview.md)
-- [Contribue/Feedback](common/feedback.md)
+- [Contribute/Feedback](common/feedback.md)
 
 
 - **BCF: Automating with Terraform**

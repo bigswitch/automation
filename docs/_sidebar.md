@@ -1,6 +1,6 @@
 - [Python - Home](python/overview.md)
 - [FAQ](common/faq.md)
-- [Contribue/Feedback](common/feedback.md)
+- [Contribute/Feedback](common/feedback.md)
 
 
 - **BCF: Python coding**
