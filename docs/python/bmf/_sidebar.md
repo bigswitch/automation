@@ -1,7 +1,6 @@
 - **BMF-Getting Started**
 - [Getting Started with Python](common/python-getting-started.md)
 - [Getting Started with Ansible](common/ansible-getting-started.md)
-- [FAQ](faq.md)
 - [Feedback](feedback.md)
 
 
