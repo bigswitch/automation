@@ -1,5 +1,4 @@
 - [Python - Home](python/overview.md)
-- [FAQ](common/faq.md)
 - [Contribute/Feedback](common/feedback.md)
 
 

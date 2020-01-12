@@ -1,5 +1,4 @@
 - [Ansible - Home](ansible/overview.md)
-- [FAQ](common/faq.md)
 - [Contribute/Feedback](common/feedback.md)
 
 

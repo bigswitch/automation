@@ -1,5 +1,4 @@
 - [Terraform - Home](terraform/overview.md)
-- [FAQ](common/faq.md)
 - [Contribute/Feedback](common/feedback.md)
 
 
