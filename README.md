@@ -1,6 +1,6 @@
 <!--
   Title: Big Switch Automation Repository
-  Description: Automation repository for Big Switch
+  Description: Automation examples repository of Big Switch
   Author: <temp>
   -->
 # BigSwitch Automation Repository
@@ -10,7 +10,7 @@
 ## Overview
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](https://github.com/bigswitch/automation)
 
-This site provides comprehensive examples on how to code with Big Switch products. Try out live at [labs.bigswitch.com](https://labs.bigswitch.com).
+This site provides examples on how to code with Big Switch products. Try out live at [labs.bigswitch.com](https://labs.bigswitch.com).
 
 ## Comments and Feedback
 
