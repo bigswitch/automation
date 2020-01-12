@@ -8,4 +8,4 @@
 
 Big Cloud Fabric Automation Examples for Ansible
 - [Getting Started with Ansible](ansible/ansible-getting-started.md)
-- [EVPC Examples](ansible/bcf/evpc-examples.md)
+- [Copy Running Config via Ansible](ansible/bcf/copy-runningconfig.md)
