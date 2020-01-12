@@ -1,0 +1,13 @@
+---
+- hosts: cont16
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: 'Copy running config to scp'
+      bcf_copy_run_to_scp:
+        controller: '10.2.18.16'
+        user: admin
+        password: adminadmin
+        scpParams: root@10.2.18.35:/root/Running_config.txt
+        scpPassword: bsn
+      changed_when: False
