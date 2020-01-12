@@ -1,7 +1,7 @@
 # Getting Started with Ansible
 
 ## Install Ansible
-Install Ansible in your system. For example here are the instructions for Debian systems:
+Install Ansible in your system. Here are the instructions for Debian systems:
 ```bash
 Latest Releases via Apt (Debian)
 Debian users may leverage the same source as the Ubuntu PPA.
