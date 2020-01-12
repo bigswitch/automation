@@ -2,7 +2,7 @@
 
 # code.bigswitch.com
 
-* -- Automation repository for Big Switch --
+* -- Automation examples repository for Big Switch --
 * Provides resources to get started with automation
 
 [Python](python/overview.md)
