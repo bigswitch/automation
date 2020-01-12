@@ -5,4 +5,4 @@
 - **BCF: Python coding**
 - [Basic Examples](python/bcf/python-basic-examples.md)
 - [Copy Membership Rules](python/bcf/python-copyMembershipRules.md)
-- [Gist Example](python/bcf/test.md)
+- [Customer Repositories](python/bcf/CustomerExamples.md)
