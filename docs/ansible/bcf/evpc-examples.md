@@ -31,8 +31,8 @@ BCF-CTRL-1#
 ```
 
 ### Use the following ansible files:
-##### [bcf.yml](https://github.com/bigswitch/automation/blob/master/ansible/bcf.yml)
-##### [Modules](https://github.com/bigswitch/automation/tree/master/ansible/modules)
+#### [bcf.yml](https://github.com/bigswitch/automation/blob/master/ansible/bcf.yml)
+#### [Modules](https://github.com/bigswitch/automation/tree/master/ansible/modules)
 
 bcf.yml:
 ```ansible
