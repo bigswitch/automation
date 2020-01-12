@@ -12,9 +12,9 @@ PLAY RECAP**********************************************************************
 
 
 #### Download the ansible files from here:
-##### 1) [bcf_copy_run_to_scp.yml](https://github.com/bigswitch/automation/blob/master/ansible/bcf_copy_run_to_scp.yml)
-##### 2) [bcf_copy_run_to_scp.py](https://github.com/bigswitch/automation/blob/master/ansible/bcf_copy_run_to_scp.py)
-##### 3) [bsn_cli.py](https://github.com/bigswitch/automation/blob/master/ansible/bsn_cli.py)
+- 1) [bcf_copy_run_to_scp.yml](https://github.com/bigswitch/automation/blob/master/ansible/bcf_copy_run_to_scp.yml)
+- 2) [bcf_copy_run_to_scp.py](https://github.com/bigswitch/automation/blob/master/ansible/bcf_copy_run_to_scp.py)
+- 3) [bsn_cli.py](https://github.com/bigswitch/automation/blob/master/ansible/bsn_cli.py)
 
 
 bcf_copy_run_to_scp.yml:
